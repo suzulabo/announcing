@@ -22,7 +22,7 @@ const en = {
   signOut: 'Sign Out',
   channelName: 'Channel name',
   desc: 'Description',
-  selectIcon: 'Select icon',
+  selectIcon: 'Select\nicon',
   cancel: 'Cancel',
   createAnnouncement: 'Create a new announcement',
   editAnnouncement: 'Edit or delete past announcements',
@@ -91,6 +91,10 @@ const en = {
   help: 'Help',
   subtitle: 'The most boring web service in the world',
   serviceDetails: 'Show Service Details',
+  errorApologize:
+    'We apologize for the inconvenience.\nIf the issue persists, please contact us through the Help section.',
+  announcementNotFound: 'Announcement not found.',
+  pageNotFound: 'Page not found.',
 } satisfies BaseTranslation;
 
 export default en;

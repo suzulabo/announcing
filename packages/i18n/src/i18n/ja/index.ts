@@ -22,7 +22,7 @@ const ja = {
   signOut: 'ログアウト',
   channelName: 'チャンネル名',
   desc: '説明文',
-  selectIcon: 'アイコンを選択',
+  selectIcon: 'アイコンを\n選択',
   cancel: 'キャンセル',
   createAnnouncement: '新しいお知らせを書く',
   editAnnouncement: '過去のお知らせを編集・削除する',
@@ -88,6 +88,10 @@ const ja = {
   help: 'ヘルプ',
   subtitle: '世界で一番退屈なWebサービス',
   serviceDetails: 'サービスの詳細はこちら',
+  errorApologize:
+    'ご迷惑をおかけします。\n問題が解決しない場合はヘルプの問い合わせよりご連絡ください。',
+  announcementNotFound: 'お知らせが見つかりません',
+  pageNotFound: 'このページはありません',
 } satisfies Translation;
 
 export default ja;
