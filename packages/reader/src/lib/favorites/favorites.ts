@@ -12,7 +12,7 @@ const favoritesSchema = v.array(
     name: v.pipe(v.string(), v.nonEmpty()),
     icon: v.optional(v.pipe(v.string(), v.nonEmpty())),
     notification: v.optional(v.boolean()),
-    lastReadID: v.pipe(v.string()),
+    lastReadID: v.optional(v.pipe(v.string())),
   }),
 );
 
@@ -52,7 +52,7 @@ export const addFavorite = (channel: GetChannelResult) => {
 };
 
 export const updateFavorites = (favorites: Favorites) => {
-  const striped = favorites.map((v) => {
+  const striped: Favorites = favorites.map((v) => {
     return {
       channelID: v.channelID,
       name: v.name,
