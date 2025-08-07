@@ -51,8 +51,10 @@
         }
 
         if (permission === 'denied') {
-          notificationDenied = true;
-          return;
+          if (notificationChannels.length > 0) {
+            notificationDenied = true;
+            return;
+          }
         }
 
         if (permission === 'granted') {
@@ -123,7 +125,7 @@
   {#each channels as channel (channel.channelID)}
     {@const unread = channel.status === 'LOADED' && channel.unread > 0}
     <svelte:element
-      this={editing ? 'div' : 'a'}
+      this={editing ? 'label' : 'a'}
       class="card channel"
       class:deleted={channel.status === 'NOT_FOUND'}
       href={`/${channel.channelID}`}
