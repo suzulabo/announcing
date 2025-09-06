@@ -3,12 +3,11 @@
   "private": true,
   "engines": {
     "node": "=24.3.0",
-    "pnpm": "=10.12.4"
+    "pnpm": "=10.15.1"
   },
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.15.1",
   "type": "module",
   "scripts": {
-    "preinstall": "npx -y only-allow pnpm",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint",
