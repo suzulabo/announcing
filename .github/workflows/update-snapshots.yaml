@@ -4,12 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       components:
+        description: 'Update snapshots for components'
         type: boolean
         default: false
       reader:
+        description: 'Update snapshots for reader'
         type: boolean
         default: false
       writer:
+        description: 'Update snapshots for writer'
         type: boolean
         default: false
 
@@ -38,11 +41,11 @@ jobs:
 
           echo "targets=[$(IFS=,; echo "${A[*]}")]" >> "$GITHUB_OUTPUT"
 
-  update-snapshorts:
+  update-snapshots:
     needs: define-matrix
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.46.0-jammy
+      image: mcr.microsoft.com/playwright:v1.55.0-jammy
     timeout-minutes: 60
     permissions:
       contents: write

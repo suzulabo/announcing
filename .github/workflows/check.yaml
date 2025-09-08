@@ -26,7 +26,7 @@ jobs:
     if: false
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.46.0-jammy
+      image: mcr.microsoft.com/playwright:v1.55.0-jammy
     timeout-minutes: 10
     permissions:
       contents: write
@@ -48,3 +48,11 @@ jobs:
         working-directory: ./packages/${{ matrix.target }}
         env:
           HOME: /root
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.target }}
+          path: packages/${{ matrix.target }}/playwright-report/
+          retention-days: 30
