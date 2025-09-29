@@ -10,12 +10,12 @@ export const GET: RequestHandler = async ({ params, locals }) => {
     return error(404);
   }
 
-  const { contentType, data } = res;
+  const { contentType, body, contentLength } = res;
 
-  return new Response(data, {
+  return new Response(body, {
     headers: {
       'Content-Type': contentType,
-      'Content-Length': data.byteLength.toString(),
+      'Content-Length': contentLength.toString(),
     },
   });
 };
