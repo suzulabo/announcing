@@ -1,6 +1,7 @@
 import { dev } from '$app/environment';
 import { EMAIL_ADDRESS } from '$env/static/private';
 import { PUBLIC_READER_SENTRY_DSN } from '$env/static/public';
+import { createCacheHandler } from '$lib/platform/cache';
 import { createDB } from '@announcing/db';
 import {
   handleErrorWithSentry,
@@ -33,10 +34,10 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
       },
     };
   } else {
-    const env = event.platform?.env;
-    if (!env) {
-      throw new Error('Missing platform.env');
+    if (!event.platform) {
+      throw new Error('Missing platform');
     }
+    const { env } = event.platform;
     event.locals = {
       ...event.locals,
       db: createDB(env),
@@ -55,6 +56,11 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
         const message = new EmailMessage(EMAIL_ADDRESS, EMAIL_ADDRESS, msg.asRaw());
         return env.SEND_EMAIL.send(message);
       },
+      cache: createCacheHandler(
+        event.url,
+        event.platform.caches.default as unknown as Cache,
+        event.platform.context.waitUntil,
+      ),
     };
   }
   return resolve(event);
