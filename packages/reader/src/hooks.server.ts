@@ -14,26 +14,34 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { EmailMessage } from 'cloudflare:email';
 import { createMimeMessage } from 'mimetext';
 
-let localBindings: App.Platform['env'];
-
-if (dev) {
-  localBindings = await (await import('$lib/local/localBinding')).createLocalBindings();
-}
-
-const cloudflareHandle: Handle = ({ resolve, event }) => {
+const cloudflareHandle: Handle = await (async () => {
   if (dev) {
-    event.locals = {
-      ...event.locals,
-      db: createDB(localBindings),
-      putToken: async (params) => {
-        await localBindings.WK_PUT_TOKEN.putToken(params);
-      },
-      sendEmail: (subject, body) => {
-        console.log(`sendEmail: ${subject}\n${body}`);
-        return Promise.resolve();
-      },
+    const platform = (await import('$lib/local/localPlatform')).localPlatform;
+    return ({ resolve, event }) => {
+      event.locals = {
+        ...event.locals,
+        db: createDB(platform.env),
+        putToken: async (params) => {
+          await platform.env.WK_PUT_TOKEN.putToken(params);
+        },
+        sendEmail: (subject, body) => {
+          console.log(`sendEmail: ${subject}\n${body}`);
+          return Promise.resolve();
+        },
+        cache: createCacheHandler(
+          event.url,
+          platform.caches.default as unknown as Cache,
+          platform.context.waitUntil,
+        ),
+      };
+
+      event.platform = platform as App.Platform;
+
+      return resolve(event);
     };
-  } else {
+  }
+
+  return ({ resolve, event }) => {
     if (!event.platform) {
       throw new Error('Missing platform');
     }
@@ -62,9 +70,10 @@ const cloudflareHandle: Handle = ({ resolve, event }) => {
         event.platform.context.waitUntil,
       ),
     };
-  }
-  return resolve(event);
-};
+
+    return resolve(event);
+  };
+})();
 
 const handlers = [];
 if (PUBLIC_READER_SENTRY_DSN) {
