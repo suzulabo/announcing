@@ -8,6 +8,7 @@ export const getStorage = async ({ r2 }: DBContext, key: string) => {
 
   return {
     contentType: res.httpMetadata?.contentType ?? '',
-    data: new Uint8Array(await res.arrayBuffer()),
+    contentLength: res.size,
+    body: res.body,
   };
 };

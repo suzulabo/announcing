@@ -1,7 +1,9 @@
 /// <reference types="@sveltejs/kit" />
 
+import type { CacheHandler } from '$lib/platform/cache';
 import type { createDB } from '@announcing/db';
 import type { PutTokenEntrypoint, PutTokenParams } from '@announcing/notification';
+import type { CacheStorage } from '@cloudflare/workers-types';
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -12,6 +14,7 @@ declare global {
       db: ReturnType<typeof createDB>;
       putToken: (params: PutTokenParams) => Promise<void>;
       sendEmail: (subject: string, body: string) => Promise<void>;
+      cache: CacheHandler;
     }
     interface PageData {
       headerNotification?: {
@@ -27,6 +30,10 @@ declare global {
         R2: R2Bucket;
         WK_PUT_TOKEN: PutTokenEntrypoint;
         SEND_EMAIL: SendEmail;
+      };
+      caches: CacheStorage;
+      context: {
+        waitUntil: (promise: Promise<unknown>) => void;
       };
     }
   }

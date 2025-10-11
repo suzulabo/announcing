@@ -12,6 +12,10 @@
       "types": "./dist/local.d.ts",
       "import": "./dist/local.js"
     },
+    "./localPlatform": {
+      "types": "./dist/localPlatform.d.ts",
+      "import": "./dist/localPlatform.js"
+    },
     "./localBindings": {
       "types": "./dist/localBindings.d.ts",
       "import": "./dist/localBindings.js"
