@@ -35,8 +35,6 @@ const cloudflareHandle: Handle = await (async () => {
         ),
       };
 
-      event.platform = platform as App.Platform;
-
       return resolve(event);
     };
   }
@@ -66,7 +64,7 @@ const cloudflareHandle: Handle = await (async () => {
       },
       cache: createCacheHandler(
         event.url,
-        event.platform.caches.default as unknown as Cache,
+        event.platform.caches.default,
         event.platform.context.waitUntil,
       ),
     };

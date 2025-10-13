@@ -1,9 +1,10 @@
 /// <reference types="@sveltejs/kit" />
 
 import type { CacheHandler } from '$lib/platform/cache';
+import type { CFCaches, CFWaitUntil } from '@announcing/cloudflare-support/cloudflareTypes';
 import type { createDB } from '@announcing/db';
 import type { PutTokenEntrypoint, PutTokenParams } from '@announcing/notification';
-import type { CacheStorage } from '@cloudflare/workers-types';
+import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -31,9 +32,9 @@ declare global {
         WK_PUT_TOKEN: PutTokenEntrypoint;
         SEND_EMAIL: SendEmail;
       };
-      caches: CacheStorage;
+      caches: CFCaches;
       context: {
-        waitUntil: (promise: Promise<unknown>) => void;
+        waitUntil: CFWaitUntil;
       };
     }
   }

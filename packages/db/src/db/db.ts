@@ -1,3 +1,4 @@
+import type { D1Database, R2Bucket } from '@cloudflare/workers-types';
 import { drizzle, DrizzleD1Database } from 'drizzle-orm/d1';
 import { addAnnouncement } from './announcement/addAnnouncement';
 import { getAnnouncement } from './announcement/getAnnouncement';
@@ -14,6 +15,7 @@ export type DBContext = {
   db: DrizzleD1Database;
   r2: R2Bucket;
 };
+
 export const createDB = ({ D1, R2 }: { D1: D1Database; R2: R2Bucket }) => {
   const ctx: DBContext = {
     db: drizzle(D1),
